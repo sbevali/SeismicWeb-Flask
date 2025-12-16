@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Fichiers Sismologiques pour TectoGlob3D</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    
+    <div class="container">
+    
+        <h1>🌍 Générateur de Données Sismologiques pour TectoGlob3D</h1>
+
+        {% if error %}
+            <p class="error">Erreur de Traitement: {{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            
+            <div>
+                <h2>1. Période et Stations (FDSN)</h2>
+                <label for="stations">Codes de station (séparés par des virgules, ex: R1F39,R2F45):</label>
+                <input type="text" id="stations" name="stations" required 
+                       value="{{ form_data.stations if form_data else '' }}">
+
+                <label for="starttime">Date/heure de début (YYYY-MM-DDTHH:MM:SS):</label>
+                <input type="text" id="starttime" name="starttime" required pattern="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}"
+                       placeholder="2025-01-01T10:00:00" 
+                       value="{{ form_data.starttime if form_data else '' }}">
+
+                <label for="endtime">Date/heure de fin (YYYY-MM-DDTHH:MM:SS):</label>
+                <input type="text" id="endtime" name="endtime" required pattern="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}"
+                       placeholder="2025-01-01T10:05:00"
+                       value="{{ form_data.endtime if form_data else '' }}">
+            </div>
+
+            <div>
+                <h2>2. Métadonnées de l'Événement Sismique</h2>
+                
+                <label for="kevnm">Nom de l'événement (kevnm):</label>
+                <input type="text" id="kevnm" name="kevnm" required
+                       value="{{ form_data.kevnm if form_data else 'Mon_Evenement' }}">
+
+                <label for="event_time">Date/heure de l'événement (YYYY-MM-DDTHH:MM:SS - Le T0):</label>
+                <input type="text" id="event_time" name="event_time" required pattern="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}"
+                       placeholder="2025-01-01T10:02:00"
+                       value="{{ form_data.event_time if form_data else '' }}">
+
+                <label for="evla">Latitude (evla):</label>
+                <input type="number" id="evla" name="evla" step="any" required
+                       value="{{ form_data.evla if form_data else '' }}">
+
+                <label for="evlo">Longitude (evlo):</label>
+                <input type="number" id="evlo" name="evlo" step="any" required
+                       value="{{ form_data.evlo if form_data else '' }}">
+
+                <label for="evdp">Profondeur en km (evdp):</label>
+                <input type="number" id="evdp" name="evdp" step="any" required
+                       value="{{ form_data.evdp if form_data else '' }}">
+
+                <label for="mag">Magnitude (mag):</label>
+                <input type="number" id="mag" name="mag" step="any" required
+                       value="{{ form_data.mag if form_data else '' }}">
+            </div>
+
+            <div>
+                <h2>3. Options TectoGlob3D</h2>
+                
+                <label>Afficher les temps d'arrivée des ondes?</label>
+                <input type="radio" id="show_wave_yes" name="show_wave_times" value="o" checked> 
+                <label for="show_wave_yes" style="display: inline;">Oui (recommandé)</label><br>
+                
+                <input type="radio" id="show_wave_no" name="show_wave_times" value="n"> 
+                <label for="show_wave_no" style="display: inline;">Non</label>
+                
+                <p>
+                    <input type="radio" id="auto_approx_yes" name="auto_approximate" value="o" checked> 
+                    <label for="auto_approx_yes" style="display: inline;">Approximation automatique des temps d'arrivée par TectoGlob3D (simplification pour le web)</label><br>
+                </p>
+            </div>
+
+            <button type="submit">Lancer le Traitement et Télécharger les Fichiers</button>
+
+        </form>
+        
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

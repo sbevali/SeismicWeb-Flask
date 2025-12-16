@@ -1,0 +1,13 @@
+# Fichier .gitignore
+
+# Ignorer le dossier de l'environnement virtuel (très important !)
+seismo_env/
+
+# Ignorer les dossiers temporaires et fichiers spécifiques à votre code
+Data_extraction_temp/
+__pycache__/
+*.pyc
+
+# Dossiers spécifiques à macOS ou Windows
+.DS_Store
+Thumbs.db

@@ -1,0 +1,4 @@
+Flask
+requests
+obspy
+gunicorn  # Requis pour exécuter l'application en production
