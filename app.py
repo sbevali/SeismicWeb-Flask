@@ -344,5 +344,5 @@ def download_files():
     )
 
 if __name__ == '__main__':
-    # Lance le serveur sur l'adresse locale 
-    app.run(debug=True, threaded=True)
+    # Sur Hugging Face, le port doit être 7860
+    app.run(host='0.0.0.0', port=7860)
